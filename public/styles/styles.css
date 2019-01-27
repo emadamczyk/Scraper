@@ -2,6 +2,10 @@ body {
   background-color: #f2f6d0;
 }
 #wrapper {
+  background-image: url("http://www.bikewalkbus.org/images/Headers/Home/1.jpg");
+  background-color: lightblue;
+  background-repeat: no-repeat;
+  background-size: contain;  
   width: 960px;
   margin-left: auto;
   margin-right: auto;
