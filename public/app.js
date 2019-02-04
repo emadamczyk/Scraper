@@ -3,13 +3,20 @@ $.getJSON("/articles", function(data) {
   // For each one
   for (var i = 0; i < data.length; i++) {
     // Display the apropos information on the page
-    $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+    $("#articles").append("<div class='card'><p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p></div>");
   }
 });
+
+$('#scrape').on('click', function(){
+  $.get('/scrape', function(data){
+    console.log(data)
+  })
+})
 
 
 // Whenever someone clicks a p tag
 $(document).on("click", "p", function() {
+  
   // Empty the notes from the note section
   $("#notes").empty();
   // Save the id from the p tag
@@ -18,11 +25,12 @@ $(document).on("click", "p", function() {
   // Now make an ajax call for the Article
   $.ajax({
     method: "GET",
-    url: "/articles/" + thisId
+    url: "/api/articles/" + thisId
   })
     // With that done, add the note information to the page
     .then(function(data) {
       console.log(data);
+      var data = data[0];
       // The title of the article
       $("#notes").append("<h2>" + data.title + "</h2>");
       // An input to enter a new title
@@ -50,7 +58,7 @@ $(document).on("click", "#savenote", function() {
   // Run a POST request to change the note, using what's entered in the inputs
   $.ajax({
     method: "POST",
-    url: "/articles/" + thisId,
+    url: "/api/articles/" + thisId,
     data: {
       // Value taken from title input
       title: $("#titleinput").val(),

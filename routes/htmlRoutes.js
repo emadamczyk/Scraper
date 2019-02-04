@@ -2,12 +2,11 @@ const db = require("../models");
 const axios = require("axios");
 const cheerio = require("cheerio");
 const moment = require("moment"); //install moment??
+const path = require('path');
 
 module.exports = function(app) {
   // Load index page
-  app.get("/", function(req, res) {
-    res.render("index")
-    });
+ 
     
   
   //load page for scraped sites -- necessary?
