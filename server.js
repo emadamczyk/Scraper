@@ -1,6 +1,7 @@
 const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 
 // Scraping tools
 const axios = require("axios");
@@ -20,7 +21,7 @@ var app = express();
 app.use(logger("dev"));
 // Parse request body as JSON
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(bodyParser.json());
 // Make public a static folder
 app.use(express.static("public"));
 
@@ -93,7 +94,7 @@ app.get('/articles', function(req, res){
     app.get("/api/articles/:id", function(req, res){
       console.log(req.params.id, "in find article")
         db.Article.find({_id: req.params.id})
-        .populate("comment")
+        .populate("note")
         .then(function(dbArticle){
             res.json(dbArticle);
         })
@@ -103,7 +104,7 @@ app.get('/articles', function(req, res){
     });
 
     /////POST COMMENT + JOIN TO ARTICLE W/ ID /////
-    app.post("/api/articles/:id", function(res, req){
+    app.post("/api/articles/:id", function(req , res){
       console.log(req.body, "this is what we are getting when we create note")
         db.Note.create(req.body)
         .then(function(note){
